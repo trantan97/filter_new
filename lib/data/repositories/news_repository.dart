@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:filter_news/data/model/news.dart';
 import 'package:filter_news/data/source/remote/api_const.dart';
 import 'package:filter_news/data/source/remote/network.dart';
 import 'package:filter_news/data/source/remote/response/news_response.dart';
@@ -34,5 +35,10 @@ class NewsRepository {
     Response response = await _network.get(url: ApiConst.API_TOP_NEWS, params: {"country": countryCode});
     var newsResponse = NewsResponse.fromJson(response.data);
     searchStream.add(newsResponse);
+  }
+
+  Future<void> saveNews(News news) async {
+    Response response = await _network.get(url: news.url);
+    print(response.data);
   }
 }
