@@ -8,7 +8,7 @@ class NewsResponse {
   num totalResults;
   List<News> articles;
 
-  static NewsResponse fromJson(Map<String, dynamic> json) {
+  static NewsResponse fromJson(Map<String, dynamic> json, {String keyword}) {
     return _$NewsResponseFromJson(json);
   }
 }

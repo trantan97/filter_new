@@ -6,7 +6,7 @@ import 'package:optimized_cached_image/optimized_cached_image.dart';
 class ItemNews extends StatelessWidget {
   final News news;
   final VoidCallback onClick;
-  final VoidCallback onLongClick;
+  final Function(Offset offset) onLongClick;
 
   const ItemNews({Key key, this.news, this.onClick, this.onLongClick}) : super(key: key);
 
@@ -14,7 +14,10 @@ class ItemNews extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onClick,
-      onLongPress: onLongClick,
+      onLongPress: () {
+        RenderBox renderBox = context.findRenderObject();
+        onLongClick(renderBox.localToGlobal(Offset(0, 100)));
+      },
       child: ConstrainedBox(
         constraints: BoxConstraints(maxHeight: 100),
         child: Padding(
@@ -25,16 +28,15 @@ class ItemNews extends StatelessWidget {
               OptimizedCacheImage(
                 fit: BoxFit.cover,
                 imageUrl: news.urlToImage ?? "",
-                imageBuilder: (context, imageProvider) =>
-                    Container(
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
-                        boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 8)],
-                      ),
-                    ),
+                imageBuilder: (context, imageProvider) => Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                    boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 8)],
+                  ),
+                ),
                 placeholder: (context, url) => placeholder,
                 errorWidget: (context, url, error) => errorView,
               ),
