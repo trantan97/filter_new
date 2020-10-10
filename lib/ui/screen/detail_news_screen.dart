@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class DetailNewsScreen extends StatefulWidget {
-  final News news;
+  final String url;
 
-  const DetailNewsScreen({Key key, this.news}) : super(key: key);
+  const DetailNewsScreen({Key key, this.url}) : super(key: key);
 
   @override
   _DetailNewsScreenState createState() => _DetailNewsScreenState();
 
-  static MaterialPageRoute getPage(News news) {
+  static MaterialPageRoute getPage(String url) {
     return MaterialPageRoute(
-      builder: (context) => DetailNewsScreen(news: news),
+      builder: (context) => DetailNewsScreen(url: url),
     );
   }
 }
@@ -27,8 +27,9 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
         child: Stack(
           children: [
             WebView(
-              initialUrl: widget.news.url,
-              onPageFinished: (url) {
+              initialUrl: widget.url,
+              javascriptMode: JavascriptMode.unrestricted,
+              onPageStarted: (url) {
                 setState(() {
                   loaded = true;
                 });

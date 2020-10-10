@@ -16,11 +16,21 @@ class Network {
     _dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
   }
 
-  Future<Response> get({String url, Map<String, dynamic> params, Options options}) async {
+  Future<Response> get(
+      {String url, Map<String, dynamic> params, Options options, ProgressCallback onReceiveProgress}) async {
     try {
-      return await _dio.get(url, queryParameters: params, options: options);
+      return await _dio.get(
+        url,
+        queryParameters: params,
+        options: options,
+        onReceiveProgress: onReceiveProgress,
+      );
     } on DioError catch (e) {
       print("DioError: ${e.toString()}");
     }
+  }
+
+  Future download({String url, String filePath, ProgressCallback onReceiveProgress}) async {
+    await _dio.download(url, filePath, onReceiveProgress: onReceiveProgress);
   }
 }

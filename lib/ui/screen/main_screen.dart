@@ -1,5 +1,7 @@
 import 'package:filter_news/data/repositories/news_repository.dart';
+import 'package:filter_news/ui/screen/favorite_screen.dart';
 import 'package:filter_news/ui/screen/news_screen.dart';
+import 'package:filter_news/ui/screen/saved_news_screen.dart';
 import 'package:filter_news/ui/widget/search_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -40,12 +42,8 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
         controller: tabController,
         children: [
           NewsScreen(),
-          Container(
-            color: Colors.blueGrey,
-          ),
-          Container(
-            color: Colors.pink,
-          ),
+          SavedNewsScreen(),
+          FavoriteScreen(),
         ],
       ),
     );
